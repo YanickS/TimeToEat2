@@ -86,3 +86,11 @@ div.content img{
 h5{
   font-weight: bold;
 }
+
+/***********************/
+/* Page Map */
+/*********************/
+#map {
+    width: 100%;
+    height: calc(100% - 50px);
+}

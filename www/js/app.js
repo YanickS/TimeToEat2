@@ -158,28 +158,58 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
   }
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, Restaurants) {
+.controller('ListDetailCtrl', function($scope, $stateParams, $window, Restaurants) {
   $scope.restaurant = Restaurants.get($stateParams.id);
 
   $scope.openMap = function(restaurant) {
-    // Copié collé de l'app précédante
-    /*this.navcontroller.push(MapPage, {
-      restaurant: restaurant
-    });*/
-    console.log(restaurant);
+    $window.location.href = '#/tab/map';
   }
 
   $scope.launch = function(url) {
-    // Copié collé de l'app précédante
-    /*this.platform.ready().then(() => {
-      cordova.InAppBrowser.open(url, "_system", "location=true");
-    });*/
-    console.log(url);
-  }  
-  
+    $window.open(encodeURI(url), '_system', 'location=yes');
+  }
+
 })
 
-.controller('MapCtrl', function($scope) {
+.controller('MapCtrl', function($scope, $window, Restaurants) {
+  //Initialisation MAP
+  var origin = {
+    lat: 44.8333,
+    lng: -0.5667
+  };
+  var latLng = new google.maps.LatLng(origin.lat, origin.lng);
+
+  var mapOptions = {
+    center: latLng,
+    zoom: 12,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+  //Initialisation markers
+  var restaurants = Restaurants.all();
+  $scope.markers = [];
+  var infoWindow = new google.maps.InfoWindow();
+  var createMarker = function (info){
+      var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(info.lat, info.lng),
+          map: $scope.map,
+          animation: google.maps.Animation.DROP,
+          title: info.nom,
+          id: info.id
+      });
+
+      google.maps.event.addListener(marker, 'click', function(){
+          $window.location.href = '#/tab/list/' + marker.id;
+      });
+
+      $scope.markers.push(marker);
+  }
+  for(var i = 0; i < restaurants.length; i++){
+    createMarker(restaurants[i]);
+  }
+
 })
 
 .controller('ArCtrl', function($scope, Ionicitude) {
