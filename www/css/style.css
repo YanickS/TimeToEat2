@@ -1,3 +1,49 @@
 .item-divider {
   background-color: rgba(255, 201, 0, 0.2);
 }
+
+/** ENTETE **/
+div.entete{
+	height:60px;
+	text-align: center;
+}
+
+pdiv.entete h5{
+	margin:0;
+	color: grey;
+}
+
+/** LISTE **/
+
+
+div.liste_restaurants ul{
+	height:100%;
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+
+li.restaurant{
+	padding-top:10px;	
+}
+
+li.restaurant div{
+	display:inline-block;
+}
+
+li.restaurant div.restaurant_details span{
+	display:block;
+}
+
+li.restaurant div.restaurant_details span.restaurant_nom{
+	margin-bottom: 5px;
+	font-size: large;
+}
+
+li.restaurant div.restaurant_distance{
+	float: right;
+}
+
+/** FILTER **/
+div.filtre{
+	height:40px;
+}

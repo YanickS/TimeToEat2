@@ -1,6 +1,30 @@
-<ion-view view-title="Restaurants">
-  <ion-content class="padding">
-    <h2>Liste des restaurants</h2>
-    
-  </ion-content>
+<ion-view view-title="Time To Eat">
+
+    <ion-content padding>
+        <div class="entete">
+            <h2>Liste des restaurants</h2>
+            <h5>dans un rayon de <span class="distanceSelected">{{distance}} m</span></h5>
+        </div>
+
+         <div class="liste_restaurants">
+            <ul class="list">
+            <li class="item restaurant" ng-repeat="restaurant in filteredRestaurants" ng-click="seeDetail(restaurant.id)">
+                <div class="restaurant_details">
+                <span class="restaurant_nom">{{restaurant.nom}}</span>
+                <span class="restaurant_typeCuisine">{{restaurant.type}}</span>
+                </div>
+                <div class="restaurant_distance">20m</div>
+            </li>
+            </ul>
+        </div>
+
+        <div class="filtre">
+            <div class="list">
+                <ion-range min="0" max="5000" step="100" pin="true" snaps="true" ng-model="distance" ng-change="updateList()">
+                    <ion-icon range-left name="pin"></ion-icon>
+                    <ion-icon small range-right name="pin"></ion-icon>
+                </ion-range>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>
