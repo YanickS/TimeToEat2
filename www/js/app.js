@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
-  .run(function ($ionicPlatform, Ionicitude) {
+  .run(function ($ionicPlatform, Ionicitude, $window) {
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins.Keyboard) {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -31,29 +31,19 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
           // To call this captureScreen action, there should be, in one of your AR World JS code and assuming that you're using Ionicitude's CHM, something like :
           //  document.location = architectsdk://captureScreen
           Ionicitude
-            .addAction(captureScreen)
-            .addAction(markerselected);
+            .addAction(function toHome(service){
+              console.log("toHome");
+              service.close();
+              $window.location.href = '#/tab/list';
+            })
+            .addAction(toDetail);
         })
         .catch(function (error) {
           console.log("Hu-ho..! Something has failed !", error);
         });
 
-      // It suggested to declare your Action as named function instead of passing callbacks to Ionicitude.addAction().
-      // It's somewhat more readable.
-
-      // The call to this Action is in www/wikitude-worlds/6_BrowsingPois_6_Bonus-CaptureScreen/js/capturescreen.js:283
-      function captureScreen() {
-        Ionicitude.captureScreen(true, null)
-          .then(function (absoluteFilePath) {
-            console.log("snapshot stored at:\n" + absoluteFilePath);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-
       // The call to this Action is in www/wikitude-worlds/6_BrowsingPois_6_Bonus-CaptureScreen/js/capturescreen.js:126
-      function markerselected(service, params) {
+      function toDetail(service, params) {
         console.log('This is the marker #' + params.id + ', that is named ' + params.title + ', and that has this description: ' + params.description);
       }
     });
@@ -213,19 +203,15 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 })
 
 .controller('ArCtrl', function($scope, Ionicitude) {
-   $scope.launchAR = function (ref) {
+
+    $scope.$on("$ionicView.enter", function(event, data){
       try {
-        // The ref passed as an argument to Ionicitude.launchAR() must be the name
-        // of a directory in the wikitude-worlds directory.
-        Ionicitude.launchAR(ref)
-          .then(function () {
-            console.log('OK ! The ' + ref + ' AR World has been perfectly launched !');
-          })
-          .catch(function (error) {
-            console.log('Error while trying to launch the ' + ref + ' AR World.', error);
-          })
-      } catch (error) {
-        console.log('But... Why ?! Something happened ?', error);
-      }
-    }
+          Ionicitude.launchAR('AR_World').then(function () {
+            console.log('OK !');
+          }).catch(function (error) { console.log('Error ', error); })
+        } catch (error) {
+          console.log('AR Not load', error);
+        }
+    });
+
 });
