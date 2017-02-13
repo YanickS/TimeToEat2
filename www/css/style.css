@@ -13,9 +13,9 @@ pdiv.entete h5{
 	color: grey;
 }
 
-/** LISTE **/
-
-
+/********************/
+/* Page Lst Restau */
+/******************/
 div.liste_restaurants ul{
 	height:100%;
 	overflow-x:hidden;
@@ -46,4 +46,19 @@ li.restaurant div.restaurant_distance{
 /** FILTER **/
 div.filtre{
 	height:40px;
+}
+
+
+/***********************/
+/* Page Detail Restau */
+/*********************/
+#zone_button, #zone_description, #zone_horaires{
+  margin: 10px 0;
+}
+#zone_button button:last-child{
+  position: relative;
+  float: right;
+}
+h5{
+  font-weight: bold;
 }

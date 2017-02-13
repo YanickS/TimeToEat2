@@ -1,8 +1,25 @@
 <!--<ion-view view-title="{{chat.name}}">-->
 <ion-view view-title="Detail-Restau">
   <ion-content class="padding">
-    <p>
-        Mon restau selectionné
-    </p>
-  </ion-content>
+  <div class="entete">
+    <h2>Restaurant sélectionné</h2>
+    <h5>{{restaurant.nom}}</h5>
+    <img src={{restaurant.img}} />
+  </div>
+  <div id="zone_button">
+    <button ng-click="openMap(restaurant)">Voir sur la map</button>
+    <button ng-click="launch(restaurant.lafourchette)">Lien internet</button>
+  </div>
+  <div id="zone_description" ng-if="restaurant.description != ''">
+    <h5>Description du restaurant</h5>
+    <p>{{restaurant.description}}</p>
+    <p>{{restaurant.description_2}}</p>
+    <p>{{restaurant.description_3}}</p>
+  </div>
+  <div id="zone_horaires" ng-if="restaurant.horaires_dejeuner != ''">
+    <h5>Horaires</h5>
+    <p>{{restaurant.horaires_dejeuner}}</p>
+    <p>{{restaurant.horaires_diner}}</p>
+  </div>
+</ion-content>
 </ion-view>

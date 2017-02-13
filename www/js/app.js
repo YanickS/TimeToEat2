@@ -76,7 +76,7 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
       }
     })
     .state('tab.list-detail', {
-        url: '/list/:restauId',
+        url: '/list/:id',
         views: {
           'tab-list': {
             templateUrl: 'templates/list-detail.html',
@@ -144,9 +144,6 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
     });
   }
 
-  /*
-  
-  */
   $scope.updateList = function(){
     $scope.filteredRestaurants = [];
     for(var i = 0; i < $scope.restaurants.length; i++){
@@ -161,8 +158,25 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
   }
 })
 
-.controller('ListDetailCtrl', function($scope/*, $stateParams, Restaurants*/) {
-  //$scope.restaurants = Restaurants.get($stateParams.restaurantId);
+.controller('ListDetailCtrl', function($scope, $stateParams, Restaurants) {
+  $scope.restaurant = Restaurants.get($stateParams.id);
+
+  $scope.openMap = function(restaurant) {
+    // Copié collé de l'app précédante
+    /*this.navcontroller.push(MapPage, {
+      restaurant: restaurant
+    });*/
+    console.log(restaurant);
+  }
+
+  $scope.launch = function(url) {
+    // Copié collé de l'app précédante
+    /*this.platform.ready().then(() => {
+      cordova.InAppBrowser.open(url, "_system", "location=true");
+    });*/
+    console.log(url);
+  }  
+  
 })
 
 .controller('MapCtrl', function($scope) {
