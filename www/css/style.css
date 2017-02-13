@@ -4,7 +4,7 @@
 
 /** ENTETE **/
 div.entete{
-	height:60px;
+	height:70px;
 	text-align: center;
 }
 
@@ -16,6 +16,14 @@ pdiv.entete h5{
 /********************/
 /* Page Lst Restau */
 /******************/
+div.scroll{
+  height: 100%;
+}
+
+div.liste_restaurants{
+    height: calc(100% - 135px);
+}
+
 div.liste_restaurants ul{
 	height:100%;
 	overflow-x:hidden;
@@ -23,7 +31,7 @@ div.liste_restaurants ul{
 }
 
 li.restaurant{
-	padding-top:10px;	
+	padding-top:10px;
 }
 
 li.restaurant div{
@@ -45,16 +53,32 @@ li.restaurant div.restaurant_distance{
 
 /** FILTER **/
 div.filtre{
-	height:40px;
+	height:10%;
 }
 
+div.filtre div.list{
+  height: 100%;
+}
+
+div.filtre div.list ion-range{
+  position: relative;
+  top: 25px;
+  height: auto;
+}
 
 /***********************/
 /* Page Detail Restau */
 /*********************/
-#zone_button, #zone_description, #zone_horaires{
-  margin: 10px 0;
+div.content{
+  margin-top: 10px;
 }
+
+div.content img{
+  position: relative;
+  left: 25%;
+  width: 50%;
+}
+
 #zone_button button:last-child{
   position: relative;
   float: right;
