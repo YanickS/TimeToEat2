@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('demo', ['ionic', 'IonicitudeModule'])
+angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
   .run(function ($ionicPlatform, Ionicitude) {
     $ionicPlatform.ready(function () {
@@ -59,8 +59,67 @@ angular.module('demo', ['ionic', 'IonicitudeModule'])
     });
   })
 
-  .controller('MainCtrl', function ($scope, Ionicitude) {
-    $scope.launchAR = function (ref) {
+  .config(function($stateProvider, $urlRouterProvider) {
+
+    $stateProvider.state('tab', {
+      url: '/tab',
+      abstract: true,
+      templateUrl: 'templates/tabs.html'
+    })
+    .state('tab.list', {
+      url: '/list',
+      views: {
+        'tab-list': {
+          templateUrl: 'templates/tab-list.html',
+          controller: 'ListCtrl'
+        }
+      }
+    })
+    .state('tab.list-detail', {
+        url: '/list/:restauId',
+        views: {
+          'tab-list': {
+            templateUrl: 'templates/list-detail.html',
+            controller: 'ListDetailCtrl'
+          }
+        }
+      })
+    .state('tab.map', {
+        url: '/map',
+        views: {
+          'tab-map': {
+            templateUrl: 'templates/tab-map.html',
+            controller: 'MapCtrl'
+          }
+        }
+      })
+    .state('tab.ar', {
+      url: '/ar',
+      views: {
+        'tab-ar': {
+          templateUrl: 'templates/tab-ar.html',
+          controller: 'ArCtrl'
+        }
+      }
+    });
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/tab/list');
+
+})
+
+.controller('ListCtrl', function ($scope/*, Restaurants*/) {
+   //$scope.restaurants = Restaurants.getAll();
+})
+
+.controller('ListDetailCtrl', function($scope/*, $stateParams, Restaurants*/) {
+  //$scope.restaurants = Restaurants.get($stateParams.restaurantId);
+})
+
+.controller('MapCtrl', function($scope) {
+})
+
+.controller('ArCtrl', function($scope, Ionicitude) {
+   $scope.launchAR = function (ref) {
       try {
         // The ref passed as an argument to Ionicitude.launchAR() must be the name
         // of a directory in the wikitude-worlds directory.
@@ -75,4 +134,4 @@ angular.module('demo', ['ionic', 'IonicitudeModule'])
         console.log('But... Why ?! Something happened ?', error);
       }
     }
-  });
+});
