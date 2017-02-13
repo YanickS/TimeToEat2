@@ -134,7 +134,8 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
     });
   }
 
-  $scope.updateList = function(){
+  $scope.updateList = function(distance){
+    $scope.distance = distance;
     $scope.filteredRestaurants = [];
     for(var i = 0; i < $scope.restaurants.length; i++){
       if($scope.restaurants[i].distance <= ($scope.distance/1000)){
