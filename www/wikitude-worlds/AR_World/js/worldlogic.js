@@ -30,7 +30,7 @@ var World = {
 		// Création des markers
 		for (var currentPlaceNr = 0; currentPlaceNr < poiData.length; currentPlaceNr++) {
 			var singlePoi = {
-				//"id": poiData[currentPlaceNr].id,
+				"id": poiData[currentPlaceNr].id,
 				"latitude": parseFloat(poiData[currentPlaceNr].lat),
 				"longitude": parseFloat(poiData[currentPlaceNr].lng),
 				//"altitude": parseFloat(poiData[currentPlaceNr].altitude),
@@ -60,7 +60,7 @@ var World = {
 	// Redirection vers native screen
 	onPoiDetailMoreButtonClicked: function onPoiDetailMoreButtonClickedFn() {
 		var currentMarker = World.currentMarker;
-		document.location = "architectsdk://button?action=redirect&title=" + encodeURIComponent(currentMarker.poiData.title);
+		document.location = "architectsdk://toDetail?" + currentMarker.poiData.id;
 	},
 
 	// Appellée lors de ArchitectView.setLocation()
@@ -77,15 +77,14 @@ var World = {
 
 	// Appelée lors de la selection d'un marker
 	onMarkerSelected: function onMarkerSelectedFn(marker) {
-		alert("Select");
+		//alert("Select");
 		if (World.currentMarker) {
-			if (World.currentMarker.poiData.id == marker.poiData.id) {
-				return;
+			if (World.currentMarker.poiData.id != marker.poiData.id) {
+				World.currentMarker.setDeselected(World.currentMarker);
 			}
-			World.currentMarker.setDeselected(World.currentMarker);
 		}
 
-		marker.setSelected(marker);
+		//marker.setSelected(marker);
 		World.currentMarker = marker;
 		//Marker details panel
 		$("#poi-detail-title").html(marker.poiData.title);
@@ -93,11 +92,9 @@ var World = {
 		// Distance restau/utilisateur
 		var distanceToUserValue = (marker.distanceToUser > 999) ? ((marker.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(marker.distanceToUser) + " m");
 		$("#poi-detail-distance").html(distanceToUserValue);
-		$("#panel-poidetail").panel("open", 123);
-		$(".ui-panel-dismiss").unbind("mousedown");
-		$("#panel-poidetail").on("panelbeforeclose", function(event, ui) {
-			World.currentMarker.setDeselected(World.currentMarker);
-		});
+
+		$("#panel-poidetail").trigger("updatelayout");
+		$("#panel-poidetail").panel("open", 1234);
 	},
 
 	// Appelée lors d'un click sur écran

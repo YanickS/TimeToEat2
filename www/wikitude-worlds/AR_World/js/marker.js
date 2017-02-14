@@ -74,9 +74,9 @@ Marker.prototype.getOnClickTrigger = function(marker) {
         if (!Marker.prototype.isAnyAnimationRunning(marker)) {
             if (marker.isSelected) { Marker.prototype.setDeselected(marker); }
             else {
-                Marker.prototype.setSelected(marker);
+                //Marker.prototype.setSelected(marker);
                 try { World.onMarkerSelected(marker); }
-                catch (err) { alert(err); }
+                catch (err) { alert("error"); }
             }
         } else { AR.logger.debug('Animation en cours'); }
         return true;
@@ -84,10 +84,9 @@ Marker.prototype.getOnClickTrigger = function(marker) {
 };
 
 Marker.prototype.setSelected = function(marker) {
-  alert("setSelected");
     marker.isSelected = true;
-    alert(marker.animationGroup_selected);
-    if (marker.animationGroup_selected === null) {
+    /*alert(marker.animationGroup_selected);
+    if (!marker.animationGroup_selected) {
         // Marker select/deselect
         var hideIdleDrawableAnimation = new AR.PropertyAnimation(marker.markerDrawable_idle, "opacity", null, 0.0, kMarker_AnimationDuration_ChangeDrawable);
         var showSelectedDrawableAnimation = new AR.PropertyAnimation(marker.markerDrawable_selected, "opacity", null, 1.0, kMarker_AnimationDuration_ChangeDrawable);
@@ -104,16 +103,9 @@ Marker.prototype.setSelected = function(marker) {
         var descriptionLabelResizeAnimation = new AR.PropertyAnimation(marker.descriptionLabel, 'scaling', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
             amplitude: 2.0
         }));
-
-        alert(hideIdleDrawableAnimation);
-        alert(showSelectedDrawableAnimation);
-        alert(idleDrawableResizeAnimation);
-        alert(selectedDrawableResizeAnimation);
-        alert(titleLabelResizeAnimation);
-        alert(descriptionLabelResizeAnimation);
         marker.animationGroup_selected = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [hideIdleDrawableAnimation, showSelectedDrawableAnimation, idleDrawableResizeAnimation, selectedDrawableResizeAnimation, titleLabelResizeAnimation, descriptionLabelResizeAnimation]);
         alert(marker.animationGroup_selected);
-    }
+    } */
     // Handler click
     marker.markerDrawable_idle.onClick = null;
     marker.markerDrawable_selected.onClick = Marker.prototype.getOnClickTrigger(marker);
@@ -122,14 +114,13 @@ Marker.prototype.setSelected = function(marker) {
     // Affichage de l'élément selectionné sur le radar
     marker.markerObject.drawables.radar = marker.radardrawablesSelected;
     // Start animation
-    marker.animationGroup_selected.start();
+    //marker.animationGroup_selected.start();
 };
 
 Marker.prototype.setDeselected = function(marker) {
-  alert("setDeselected");
     marker.isSelected = false;
     marker.markerObject.drawables.radar = marker.radardrawables;
-    if (marker.animationGroup_idle === null) {
+    /*if (marker.animationGroup_idle === null) {
         // Marker select/deselect
         var showIdleDrawableAnimation = new AR.PropertyAnimation(marker.markerDrawable_idle, "opacity", null, 1.0, kMarker_AnimationDuration_ChangeDrawable);
         var hideSelectedDrawableAnimation = new AR.PropertyAnimation(marker.markerDrawable_selected, "opacity", null, 0, kMarker_AnimationDuration_ChangeDrawable);
@@ -147,14 +138,14 @@ Marker.prototype.setDeselected = function(marker) {
             amplitude: 2.0
         }));
         marker.animationGroup_idle = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [showIdleDrawableAnimation, hideSelectedDrawableAnimation, idleDrawableResizeAnimation, selectedDrawableResizeAnimation, titleLabelResizeAnimation, descriptionLabelResizeAnimation]);
-    }
+    }*/
     // Handler click
     marker.markerDrawable_idle.onClick = Marker.prototype.getOnClickTrigger(marker);
     marker.markerDrawable_selected.onClick = null;
     // Désactivation fleche directionnelle
     marker.directionIndicatorDrawable.enabled = false;
     // Start animation
-    marker.animationGroup_idle.start();
+    //marker.animationGroup_idle.start();
 };
 
 Marker.prototype.isAnyAnimationRunning = function(marker) {

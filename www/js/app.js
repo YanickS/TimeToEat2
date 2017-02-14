@@ -32,20 +32,17 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
           //  document.location = architectsdk://captureScreen
           Ionicitude
             .addAction(function toHome(service){
-              console.log("toHome");
               service.close();
               $window.location.href = '#/tab/list';
             })
-            .addAction(toDetail);
+            .addAction(function toDetail(service, params){
+              service.close();
+              $window.location.href = '#/tab/list/' + params;
+            });
         })
         .catch(function (error) {
           console.log("Hu-ho..! Something has failed !", error);
         });
-
-      // The call to this Action is in www/wikitude-worlds/6_BrowsingPois_6_Bonus-CaptureScreen/js/capturescreen.js:126
-      function toDetail(service, params) {
-        console.log('This is the marker #' + params.id + ', that is named ' + params.title + ', and that has this description: ' + params.description);
-      }
     });
   })
 
