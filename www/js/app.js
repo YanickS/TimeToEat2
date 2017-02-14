@@ -69,16 +69,18 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
             templateUrl: 'templates/list-detail.html',
             controller: 'ListDetailCtrl'
           }
-        }
+        },
+        cache: false
       })
     .state('tab.map', {
-        url: '/map/:id',
+        url: '/map',
         views: {
           'tab-map': {
             templateUrl: 'templates/tab-map.html',
             controller: 'MapCtrl'
           }
-        }
+        },
+        cache: false
       })
     .state('tab.ar', {
       url: '/ar',
@@ -136,7 +138,7 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
     }
   }
   $scope.init();
-  
+
 
   $scope.updateList = function(distance){
     $scope.distance = distance;
@@ -158,11 +160,12 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
   }
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, $window, Restaurants) {
+.controller('ListDetailCtrl', function($rootScope, $scope, $stateParams, $window, Restaurants) {
   $scope.restaurant = Restaurants.get($stateParams.id);
 
   $scope.openMap = function(restaurantId) {
-    $window.location.href = '#/tab/map/' + restaurantId;
+    $rootScope.element = restaurantId;
+    $window.location.href = '#/tab/map';
   }
 
   $scope.launch = function(url) {
@@ -171,7 +174,7 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
 })
 
-.controller('MapCtrl', function($scope, $stateParams, $window, Restaurants) {
+.controller('MapCtrl', function($rootScope, $scope, $stateParams, $window, Restaurants) {
   var map;
   var markers = [];
   var restaurants = Restaurants.all();
@@ -197,6 +200,13 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
     return map;
   }
 
+  var removeMarkers = function(){
+    for(var i = 0; i < markers.length; i++){
+      markers[i].setMap(null);
+    }
+    markers = [];
+  }
+
   //Initialisation markers
   var createMarker = function (info){
     var image = {
@@ -217,6 +227,7 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
       });
 
       google.maps.event.addListener(marker, 'click', function(){
+          removeMarkers();
           $window.location.href = '#/tab/list/' + marker.id;
       });
 
@@ -225,25 +236,28 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
   $scope.$on("$ionicView.enter", function(event, data){
     $scope.map = initMap();
-    if($stateParams.id == ""){
+    console.log("enter all");
+
+    if($rootScope.element == undefined){
       for(var i = 0; i < restaurants.length; i++){
         var push = createMarker(restaurants[i]);
         markers.push(push);
       }
     }
-    else{
-      var restaurant = Restaurants.get($stateParams.id);
+    else {
+      var restaurantId = $rootScope.element;
+      $rootScope.element = undefined;
+      var restaurant = Restaurants.get(restaurantId);
       var push = createMarker(restaurant);
       markers = push;
     }
   })
 
   $scope.$on("$ionicView.leave", function(event, data){
-    for(var i = 0; i < markers.length; i++){
-      markers[i].setMap(null);
-    }
-    markers = [];
+    removeMarkers();
+    console.log("left all");
   })
+
 })
 
 .controller('ArCtrl', function($scope, Ionicitude) {
