@@ -8,7 +8,7 @@
 
          <div class="liste_restaurants">
             <ul class="list">
-            <li class="item restaurant" ng-repeat="restaurant in filteredRestaurants" ng-click="seeDetail(restaurant.id)">
+            <li class="item restaurant" ng-repeat="restaurant in filteredRestaurants | orderBy :'+distance'" ng-click="seeDetail(restaurant.id)">
                 <div class="restaurant_details">
                 <span class="restaurant_nom">{{restaurant.nom}}</span>
                 <span class="restaurant_typeCuisine">{{restaurant.type}}</span>
