@@ -1,4 +1,5 @@
 # Time To Eat
+<img src="https://github.com/YanickS/TimeToEat2/blob/master/resources/icon.png" width="250px">
 
 ## Sommaire
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -85,14 +86,20 @@ Après avoir démarré le fichier _(platforms/ios/WikitudeIonic2StarterApp.xcode
 ## Utilisation
 L'application Time To Eat se répartie en 3 grands principes :
 
-1. La liste des restaurants à proximité (filtre de distance).
 
+* La liste des restaurants à proximité (filtre de distance). 
 
-2. La visualisation des restaurants par une carte Google Maps.
+<img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/Liste.jpg" width="250px">
+<img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/Detail.jpg" width="250px">
 
+* La visualisation des restaurants par une carte Google Maps.
 
-3. La visualisation des adresses des restaurants par la réalité augmentée.
-![Image réalité augmentée](https://www.wikitude.com/external/doc/documentation/5.1/phonegap/images/sample_poi_selecting_poi.jpg)
+<img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/Carte.jpg" width="250px">
+
+* La visualisation des adresses des restaurants par la réalité augmentée.
+
+<img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/RE2.jpg" width="250px">
+<img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/RE1.jpg" width="250px">
 
 
 ## Liens utiles

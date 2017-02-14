@@ -1,6 +1,6 @@
 // AR World
 var World = {
-	
+
 	userLocation: null,
 	isRequestingData: false,
 	initiallyLoadedData: false,
@@ -79,27 +79,30 @@ var World = {
 	onMarkerSelected: function onMarkerSelectedFn(marker) {
 		alert("Select");
 		if (World.currentMarker) {
-			if (World.currentMarker.poiData.id != marker.poiData.id) {
-				World.currentMarker.setDeselected(World.currentMarker);
+			if (World.currentMarker.poiData.id == marker.poiData.id) {
+				return;
 			}
+			World.currentMarker.setDeselected(World.currentMarker);
 		}
+
 		marker.setSelected(marker);
 		World.currentMarker = marker;
 		// Marker details panel
-		$("#poi-detail-title").html(marker.poiData.title);
-		$("#poi-detail-description").html(marker.poiData.description);
-		// Distance restau/utilisateur
-		var distanceToUserValue = (marker.distanceToUser > 999) ? ((marker.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(marker.distanceToUser) + " m");
-		$("#poi-detail-distance").html(distanceToUserValue);
-		$("#panel-poidetail").panel("open", 123);
-		$(".ui-panel-dismiss").unbind("mousedown");
-		$("#panel-poidetail").on("panelbeforeclose", function(event, ui) {
-			World.currentMarker.setDeselected(World.currentMarker);
-		});
+		// $("#poi-detail-title").html(marker.poiData.title);
+		// $("#poi-detail-description").html(marker.poiData.description);
+		// // Distance restau/utilisateur
+		// var distanceToUserValue = (marker.distanceToUser > 999) ? ((marker.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(marker.distanceToUser) + " m");
+		// $("#poi-detail-distance").html(distanceToUserValue);
+		// $("#panel-poidetail").panel("open", 123);
+		// $(".ui-panel-dismiss").unbind("mousedown");
+		// $("#panel-poidetail").on("panelbeforeclose", function(event, ui) {
+		// 	World.currentMarker.setDeselected(World.currentMarker);
+		// });
 	},
 
 	// Appelée lors d'un click sur écran
 	onScreenClick: function onScreenClickFn() {
+		alert("onScreenClick");
 		if (World.currentMarker) { World.currentMarker.setDeselected(World.currentMarker); }
 	},
 
