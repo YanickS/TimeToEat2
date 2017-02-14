@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="demo.ionicitude.app2" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Ionicitude Demo</name>
+  <name>TimeToEat</name>
   <description>
-        A demo application that uses the Wikitude Cordova Plugin with the Ionicitude package to manage it.
+        Epsi AR Project
     </description>
-  <author email="obersonmathias@gmail.com" href="https://github.com/Tazaf/">
-      Mathias (Tazaf) Oberson
+  <author email="epsiI5@gmail.com" href="https://github.com/YanickS/TimeToEat2">
+      EpsiI5 TimeToEat
     </author>
   <content src="index.html"/>
   <access origin="*"/>
