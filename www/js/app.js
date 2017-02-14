@@ -100,7 +100,7 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 .controller('ListCtrl', function ($scope, Restaurants, $window) {
   $scope.restaurants = {};
   $scope.filteredRestaurants = [];
-  $scope.distance = 5000;
+  $scope.distance = 2500;
   $scope.currentLocation = {};
 
   $scope.toRad = function(value) {
@@ -125,8 +125,8 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
         $scope.currentLocation = position.coords;
         $scope.restaurants = Restaurants.all();
         for(var i = 0; i < $scope.restaurants.length; i++){
-          $scope.restaurants[i].distance = $scope.dist($scope.currentLocation.latitude, $scope.currentLocation.longitude, $scope.restaurants[i].lat, $scope.restaurants[i].lng);
-          if($scope.restaurants[i].distance <= ($scope.distance/1000)){
+          $scope.restaurants[i].distance = ($scope.dist($scope.currentLocation.latitude, $scope.currentLocation.longitude, $scope.restaurants[i].lat, $scope.restaurants[i].lng))*1000;
+          if($scope.restaurants[i].distance <= $scope.distance){
             $scope.filteredRestaurants.push($scope.restaurants[i]);
           }
         }
@@ -138,7 +138,7 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
     $scope.distance = distance;
     $scope.filteredRestaurants = [];
     for(var i = 0; i < $scope.restaurants.length; i++){
-      if($scope.restaurants[i].distance <= ($scope.distance/1000)){
+      if($scope.restaurants[i].distance <= $scope.distance){
         $scope.filteredRestaurants.push($scope.restaurants[i]);
       }
     }
