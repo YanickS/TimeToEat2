@@ -163,8 +163,10 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 })
 
 .controller('MapCtrl', function($scope, $stateParams, $window, Restaurants) {
-  $scope.$on("$ionicView.enter", function(event, data){
+  var map;
+  var markers = [];
 
+  $scope.$on("$ionicView.enter", function(event, data){
     //Initialisation MAP
     var origin = {
       lat: 44.8333,
@@ -177,9 +179,10 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
       zoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
+    if(map == undefined){
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      $scope.map = map;
+    }
     //Initialisation markers
     var createMarker = function (info){
       var image = {
@@ -192,7 +195,7 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(info.lat, info.lng),
-            map: $scope.map,
+            map: map,
             animation: google.maps.Animation.DROP,
             title: info.nom,
             id: info.id,
@@ -202,6 +205,8 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
         google.maps.event.addListener(marker, 'click', function(){
             $window.location.href = '#/tab/list/' + marker.id;
         });
+
+        markers.push(marker);
     }
     if($stateParams.id !== "0"){
       var restaurant = Restaurants.get($stateParams.id);
@@ -213,6 +218,13 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
         createMarker(restaurants[i]);
       }
     }
+  })
+
+  $scope.$on("$ionicView.leave", function(event, data){
+    for(var i = 0; i < markers.length; i++){
+      markers[i].setMap(null);
+    }
+    markers = [];
   })
 })
 
