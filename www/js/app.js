@@ -120,20 +120,23 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
   }
 
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position){
-      $scope.$apply(function(){
-        $scope.currentLocation = position.coords;
-        $scope.restaurants = Restaurants.all();
-        for(var i = 0; i < $scope.restaurants.length; i++){
-          $scope.restaurants[i].distance = ($scope.dist($scope.currentLocation.latitude, $scope.currentLocation.longitude, $scope.restaurants[i].lat, $scope.restaurants[i].lng))*1000;
-          if($scope.restaurants[i].distance <= $scope.distance){
-            $scope.filteredRestaurants.push($scope.restaurants[i]);
+    navigator.geolocation.getCurrentPosition(
+      function(position){
+        $scope.$apply(function(){
+          $scope.currentLocation = position.coords;
+          $scope.restaurants = Restaurants.all();
+          for(var i = 0; i < $scope.restaurants.length; i++){
+            $scope.restaurants[i].distance = ($scope.dist($scope.currentLocation.latitude, $scope.currentLocation.longitude, $scope.restaurants[i].lat, $scope.restaurants[i].lng))*1000;
+            if($scope.restaurants[i].distance <= $scope.distance){
+              $scope.filteredRestaurants.push($scope.restaurants[i]);
+            }
           }
-        }
-      });
-    });
+        });
+    }, function(error){
+      alert("error "+error.message);
+    }, { maximumAge: 3000, timeout: 10000, enableHighAccuracy: false }
+    );
   }
-
   $scope.updateList = function(distance){
     $scope.distance = distance;
     $scope.filteredRestaurants = [];
