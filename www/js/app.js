@@ -119,24 +119,28 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
     return Math.round(d*100)/100;
   }
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      function(position){
-        $scope.$apply(function(){
-          $scope.currentLocation = position.coords;
-          $scope.restaurants = Restaurants.all();
-          for(var i = 0; i < $scope.restaurants.length; i++){
-            $scope.restaurants[i].distance = ($scope.dist($scope.currentLocation.latitude, $scope.currentLocation.longitude, $scope.restaurants[i].lat, $scope.restaurants[i].lng))*1000;
-            if($scope.restaurants[i].distance <= $scope.distance){
-              $scope.filteredRestaurants.push($scope.restaurants[i]);
+  $scope.init = function(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position){
+          $scope.$apply(function(){
+            $scope.currentLocation = position.coords;
+            $scope.restaurants = Restaurants.all();
+            for(var i = 0; i < $scope.restaurants.length; i++){
+              $scope.restaurants[i].distance = ($scope.dist($scope.currentLocation.latitude, $scope.currentLocation.longitude, $scope.restaurants[i].lat, $scope.restaurants[i].lng))*1000;
+              if($scope.restaurants[i].distance <= $scope.distance){
+                $scope.filteredRestaurants.push($scope.restaurants[i]);
+              }
             }
-          }
-        });
-    }, function(error){
-
-    }, { maximumAge: 3000, timeout: 10000, enableHighAccuracy: false }
-    );
+          });
+      }, function(error){
+      }, { maximumAge: 3000, timeout: 10000, enableHighAccuracy: false }
+      );
+    }
   }
+  $scope.init();
+  
+
   $scope.updateList = function(distance){
     $scope.distance = distance;
     $scope.filteredRestaurants = [];
@@ -145,6 +149,11 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
         $scope.filteredRestaurants.push($scope.restaurants[i]);
       }
     }
+  }
+
+  $scope.refreshList = function(){
+    $scope.filteredRestaurants = [];
+    $scope.init();
   }
 
   $scope.seeDetail = function(restaurantId){
