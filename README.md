@@ -85,7 +85,8 @@ Après avoir démarré le fichier _(platforms/ios/WikitudeIonic2StarterApp.xcode
 ## Utilisation
 L'application Time To Eat se répartie en 3 grands principes :
 
-1. La liste des restaurants à proximité (filtre de distance).
+
+1. La liste des restaurants à proximité (filtre de distance). 
 
 <img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/Liste.jpg" width="250px">
 <img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/Detail.jpg" width="250px">
