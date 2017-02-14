@@ -1,4 +1,5 @@
 # Time To Eat
+<img src="https://github.com/YanickS/TimeToEat2/blob/master/resources/icon.png" width="250px">
 
 ## Sommaire
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
