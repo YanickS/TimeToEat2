@@ -87,22 +87,21 @@ var World = {
 
 		marker.setSelected(marker);
 		World.currentMarker = marker;
-		// Marker details panel
-		// $("#poi-detail-title").html(marker.poiData.title);
-		// $("#poi-detail-description").html(marker.poiData.description);
-		// // Distance restau/utilisateur
-		// var distanceToUserValue = (marker.distanceToUser > 999) ? ((marker.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(marker.distanceToUser) + " m");
-		// $("#poi-detail-distance").html(distanceToUserValue);
-		// $("#panel-poidetail").panel("open", 123);
-		// $(".ui-panel-dismiss").unbind("mousedown");
-		// $("#panel-poidetail").on("panelbeforeclose", function(event, ui) {
-		// 	World.currentMarker.setDeselected(World.currentMarker);
-		// });
+		//Marker details panel
+		$("#poi-detail-title").html(marker.poiData.title);
+		$("#poi-detail-description").html(marker.poiData.description);
+		// Distance restau/utilisateur
+		var distanceToUserValue = (marker.distanceToUser > 999) ? ((marker.distanceToUser / 1000).toFixed(2) + " km") : (Math.round(marker.distanceToUser) + " m");
+		$("#poi-detail-distance").html(distanceToUserValue);
+		$("#panel-poidetail").panel("open", 123);
+		$(".ui-panel-dismiss").unbind("mousedown");
+		$("#panel-poidetail").on("panelbeforeclose", function(event, ui) {
+			World.currentMarker.setDeselected(World.currentMarker);
+		});
 	},
 
 	// Appelée lors d'un click sur écran
 	onScreenClick: function onScreenClickFn() {
-		alert("onScreenClick");
 		if (World.currentMarker) { World.currentMarker.setDeselected(World.currentMarker); }
 	},
 

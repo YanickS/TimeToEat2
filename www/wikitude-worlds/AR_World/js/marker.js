@@ -71,7 +71,6 @@ function Marker(poiData) {
 
 Marker.prototype.getOnClickTrigger = function(marker) {
     return function() {
-      alert("getOnClickTrigger");
         if (!Marker.prototype.isAnyAnimationRunning(marker)) {
             if (marker.isSelected) { Marker.prototype.setDeselected(marker); }
             else {
@@ -87,6 +86,7 @@ Marker.prototype.getOnClickTrigger = function(marker) {
 Marker.prototype.setSelected = function(marker) {
   alert("setSelected");
     marker.isSelected = true;
+    alert(marker.animationGroup_selected);
     if (marker.animationGroup_selected === null) {
         // Marker select/deselect
         var hideIdleDrawableAnimation = new AR.PropertyAnimation(marker.markerDrawable_idle, "opacity", null, 0.0, kMarker_AnimationDuration_ChangeDrawable);
@@ -94,7 +94,8 @@ Marker.prototype.setSelected = function(marker) {
         // Effets
         var idleDrawableResizeAnimation = new AR.PropertyAnimation(marker.markerDrawable_idle, 'scaling', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
             amplitude: 2.0
-        }));var selectedDrawableResizeAnimation = new AR.PropertyAnimation(marker.markerDrawable_selected, 'scaling', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
+        }));
+        var selectedDrawableResizeAnimation = new AR.PropertyAnimation(marker.markerDrawable_selected, 'scaling', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
             amplitude: 2.0
         }));
         var titleLabelResizeAnimation = new AR.PropertyAnimation(marker.titleLabel, 'scaling', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
@@ -103,7 +104,15 @@ Marker.prototype.setSelected = function(marker) {
         var descriptionLabelResizeAnimation = new AR.PropertyAnimation(marker.descriptionLabel, 'scaling', null, 1.2, kMarker_AnimationDuration_Resize, new AR.EasingCurve(AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC, {
             amplitude: 2.0
         }));
+
+        alert(hideIdleDrawableAnimation);
+        alert(showSelectedDrawableAnimation);
+        alert(idleDrawableResizeAnimation);
+        alert(selectedDrawableResizeAnimation);
+        alert(titleLabelResizeAnimation);
+        alert(descriptionLabelResizeAnimation);
         marker.animationGroup_selected = new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [hideIdleDrawableAnimation, showSelectedDrawableAnimation, idleDrawableResizeAnimation, selectedDrawableResizeAnimation, titleLabelResizeAnimation, descriptionLabelResizeAnimation]);
+        alert(marker.animationGroup_selected);
     }
     // Handler click
     marker.markerDrawable_idle.onClick = null;
