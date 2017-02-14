@@ -101,6 +101,4 @@ L'application Time To Eat se répartie en 3 grands principes :
 * [Ionicitude](https://github.com/Tazaf/ionicitude)
 
 ## License
-This demo application is licensed under both the MIT Licence (as requested by [Ionicitude](https://github.com/Tazaf/ionicitude#license)) and the Apache v2.0 License (as requested by the [Augmented Reality Cordova Sample App](https://github.com/Wikitude/wikitude-cordova-plugin-samples#license)).
-
-See [LICENCE-MIT.txt](https://github.com/Tazaf/IonicitudeDemoApp/blob/master/LICENSE-MIT.txt) and [LICENCE-APACHE.txt](https://github.com/Tazaf/IonicitudeDemoApp/blob/master/LICENSE-APACHE.txt), respectivly, for more information.
+L'application Time To Eat est sous licenses : MIT Licence ([Ionicitude](https://github.com/Tazaf/ionicitude#license)) et Apache v2.0 License ([Wikitude](http://www.wikitude.com/)).
