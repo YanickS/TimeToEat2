@@ -98,6 +98,7 @@ L'application Time To Eat se répartie en 3 grands principes :
 * La visualisation des adresses des restaurants par la réalité augmentée.
 
 <img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/RE2.jpg" width="250px">
+<img src="https://github.com/YanickS/TimeToEat2/blob/master/www/img/screen/RE1.jpg" width="250px">
 
 
 ## Liens utiles
