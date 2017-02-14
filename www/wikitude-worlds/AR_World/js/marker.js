@@ -71,11 +71,12 @@ function Marker(poiData) {
 
 Marker.prototype.getOnClickTrigger = function(marker) {
     return function() {
+      alert("getOnClickTrigger");
         if (!Marker.prototype.isAnyAnimationRunning(marker)) {
-            if (marker.isSelected) { Marker.prototype.setDeselected(marker); } 
+            if (marker.isSelected) { Marker.prototype.setDeselected(marker); }
             else {
                 Marker.prototype.setSelected(marker);
-                try { World.onMarkerSelected(marker); } 
+                try { World.onMarkerSelected(marker); }
                 catch (err) { alert(err); }
             }
         } else { AR.logger.debug('Animation en cours'); }
@@ -84,6 +85,7 @@ Marker.prototype.getOnClickTrigger = function(marker) {
 };
 
 Marker.prototype.setSelected = function(marker) {
+  alert("setSelected");
     marker.isSelected = true;
     if (marker.animationGroup_selected === null) {
         // Marker select/deselect
@@ -115,6 +117,7 @@ Marker.prototype.setSelected = function(marker) {
 };
 
 Marker.prototype.setDeselected = function(marker) {
+  alert("setDeselected");
     marker.isSelected = false;
     marker.markerObject.drawables.radar = marker.radardrawables;
     if (marker.animationGroup_idle === null) {
@@ -146,7 +149,7 @@ Marker.prototype.setDeselected = function(marker) {
 };
 
 Marker.prototype.isAnyAnimationRunning = function(marker) {
-    if (marker.animationGroup_idle === null || marker.animationGroup_selected === null) { return false; } 
+    if (marker.animationGroup_idle === null || marker.animationGroup_selected === null) { return false; }
     else {
         if ((marker.animationGroup_idle.isRunning() === true) || (marker.animationGroup_selected.isRunning() === true)) {
             return true;

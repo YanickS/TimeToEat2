@@ -176,3 +176,4 @@ var World = {
 };
 AR.context.onLocationChanged = World.locationChanged;
 AR.context.onScreenClick = World.onScreenClick;
+AR.context.onMarkerSelected = World.onMarkerSelected;
