@@ -9,7 +9,7 @@
   <div class="content">
     <img src={{restaurant.img}} />
     <div id="zone_button">
-      <button ng-click="openMap(restaurant)">Voir sur la map</button>
+      <button ng-click="openMap(restaurant.id)">Voir sur la map</button>
       <button ng-click="launch(restaurant.lafourchette)">Lien internet</button>
     </div>
     <div id="zone_description" ng-if="restaurant.description != ''">

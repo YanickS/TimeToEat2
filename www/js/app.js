@@ -83,6 +83,15 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
           }
         }
       })
+    .state('tab.map-one', {
+        url: '/map/:id',
+        views: {
+          'tab-map': {
+            templateUrl: 'templates/tab-map.html',
+            controller: 'MapCtrl'
+          }
+        }
+      })
     .state('tab.ar', {
       url: '/ar',
       views: {
@@ -152,8 +161,8 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 .controller('ListDetailCtrl', function($scope, $stateParams, $window, Restaurants) {
   $scope.restaurant = Restaurants.get($stateParams.id);
 
-  $scope.openMap = function(restaurant) {
-    $window.location.href = '#/tab/map';
+  $scope.openMap = function(restaurantId) {
+    $window.location.href = '#/tab/map/' + restaurantId;
   }
 
   $scope.launch = function(url) {
@@ -162,7 +171,7 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
 })
 
-.controller('MapCtrl', function($scope, $window, Restaurants) {
+.controller('MapCtrl', function($scope, $stateParams, $window, Restaurants) {
   //Initialisation MAP
   var origin = {
     lat: 44.8333,
@@ -179,16 +188,24 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
   $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
   //Initialisation markers
-  var restaurants = Restaurants.all();
   $scope.markers = [];
   var infoWindow = new google.maps.InfoWindow();
   var createMarker = function (info){
+    var image = {
+      url: "/img/custom-marker.png",
+      size: new google.maps.Size(75, 75),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(15, 30)
+    }
+
       var marker = new google.maps.Marker({
           position: new google.maps.LatLng(info.lat, info.lng),
           map: $scope.map,
           animation: google.maps.Animation.DROP,
           title: info.nom,
-          id: info.id
+          id: info.id,
+          icon: image
       });
 
       google.maps.event.addListener(marker, 'click', function(){
@@ -197,10 +214,17 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
       $scope.markers.push(marker);
   }
-  for(var i = 0; i < restaurants.length; i++){
-    createMarker(restaurants[i]);
-  }
 
+  if($stateParams.id !== undefined){
+    var restaurant = Restaurants.get($stateParams.id);
+    createMarker(restaurant);
+  }
+  else{
+    var restaurants = Restaurants.all();
+    for(var i = 0; i < restaurants.length; i++){
+      createMarker(restaurants[i]);
+    }
+  }
 })
 
 .controller('ArCtrl', function($scope, Ionicitude) {
