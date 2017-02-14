@@ -180,9 +180,6 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    $scope.markers = [];
-    $scope.markers.length = 0;
-
     //Initialisation markers
     var createMarker = function (info){
       var image = {
@@ -205,17 +202,13 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
         google.maps.event.addListener(marker, 'click', function(){
             $window.location.href = '#/tab/list/' + marker.id;
         });
-
-        //$scope.markers.push(marker);
     }
-    console.log($stateParams.id);
     if($stateParams.id !== "0"){
       var restaurant = Restaurants.get($stateParams.id);
       createMarker(restaurant);
     }
     else{
       var restaurants = Restaurants.all();
-      console.log(restaurants);
       for(var i = 0; i < restaurants.length; i++){
         createMarker(restaurants[i]);
       }
