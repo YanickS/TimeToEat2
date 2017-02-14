@@ -75,15 +75,6 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
         }
       })
     .state('tab.map', {
-        url: '/map',
-        views: {
-          'tab-map': {
-            templateUrl: 'templates/tab-map.html',
-            controller: 'MapCtrl'
-          }
-        }
-      })
-    .state('tab.map-one', {
         url: '/map/:id',
         views: {
           'tab-map': {
@@ -172,59 +163,64 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 })
 
 .controller('MapCtrl', function($scope, $stateParams, $window, Restaurants) {
-  //Initialisation MAP
-  var origin = {
-    lat: 44.8333,
-    lng: -0.5667
-  };
-  var latLng = new google.maps.LatLng(origin.lat, origin.lng);
+  $scope.$on("$ionicView.enter", function(event, data){
 
-  var mapOptions = {
-    center: latLng,
-    zoom: 12,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
+    //Initialisation MAP
+    var origin = {
+      lat: 44.8333,
+      lng: -0.5667
+    };
+    var latLng = new google.maps.LatLng(origin.lat, origin.lng);
 
-  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    var mapOptions = {
+      center: latLng,
+      zoom: 12,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
 
-  //Initialisation markers
-  $scope.markers = [];
-  var infoWindow = new google.maps.InfoWindow();
-  var createMarker = function (info){
-    var image = {
-      url: "/img/custom-marker.png",
-      size: new google.maps.Size(75, 75),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(15, 30)
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    $scope.markers = [];
+    $scope.markers.length = 0;
+
+    //Initialisation markers
+    var createMarker = function (info){
+      var image = {
+        url: "img/custom-marker.png",
+        size: new google.maps.Size(75, 75),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(15, 30)
+      }
+
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(info.lat, info.lng),
+            map: $scope.map,
+            animation: google.maps.Animation.DROP,
+            title: info.nom,
+            id: info.id,
+            icon: image
+        });
+
+        google.maps.event.addListener(marker, 'click', function(){
+            $window.location.href = '#/tab/list/' + marker.id;
+        });
+
+        //$scope.markers.push(marker);
     }
-
-      var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(info.lat, info.lng),
-          map: $scope.map,
-          animation: google.maps.Animation.DROP,
-          title: info.nom,
-          id: info.id,
-          icon: image
-      });
-
-      google.maps.event.addListener(marker, 'click', function(){
-          $window.location.href = '#/tab/list/' + marker.id;
-      });
-
-      $scope.markers.push(marker);
-  }
-
-  if($stateParams.id !== undefined){
-    var restaurant = Restaurants.get($stateParams.id);
-    createMarker(restaurant);
-  }
-  else{
-    var restaurants = Restaurants.all();
-    for(var i = 0; i < restaurants.length; i++){
-      createMarker(restaurants[i]);
+    console.log($stateParams.id);
+    if($stateParams.id !== "0"){
+      var restaurant = Restaurants.get($stateParams.id);
+      createMarker(restaurant);
     }
-  }
+    else{
+      var restaurants = Restaurants.all();
+      console.log(restaurants);
+      for(var i = 0; i < restaurants.length; i++){
+        createMarker(restaurants[i]);
+      }
+    }
+  })
 })
 
 .controller('ArCtrl', function($scope, Ionicitude) {
