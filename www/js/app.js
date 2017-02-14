@@ -166,9 +166,10 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 })
 
 .controller('MapCtrl', function($scope, $stateParams, $window, Restaurants) {
-  console.log("MapCtrl");
   var map;
   var markers = [];
+  var restaurants = Restaurants.all();
+
   //Initialisation MAP
   var initMap = function(){
     var origin = {
@@ -218,17 +219,16 @@ angular.module('demo', ['ionic', 'IonicitudeModule', 'demo.services'])
 
   $scope.$on("$ionicView.enter", function(event, data){
     $scope.map = initMap();
-    if($stateParams.id !== "0"){
-      var restaurant = Restaurants.get($stateParams.id);
-      var push = createMarker(restaurant);
-      markers = push;
-    }
-    else{
-      var restaurants = Restaurants.all();
+    if($stateParams.id == ""){
       for(var i = 0; i < restaurants.length; i++){
         var push = createMarker(restaurants[i]);
         markers.push(push);
       }
+    }
+    else{
+      var restaurant = Restaurants.get($stateParams.id);
+      var push = createMarker(restaurant);
+      markers = push;
     }
   })
 
